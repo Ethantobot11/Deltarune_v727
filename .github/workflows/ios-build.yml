@@ -16,6 +16,7 @@ jobs:
       - name: Change App Display Name inside Info.plist
         run: |
           sed -i 's/<string>DELTARUNE<\/string>/<string>SOULBLAZERS<\/string>/g' Payload/DELTARUNE.app/Info.plist
+          sed -i 's/<string>com.ates.DELTARUNE<\/string>/<string>com.ethantobot.soulblazers<\/string>/g' Payload/DELTARUNE.app/Info.plist
 
       - name: Safely Rename Executable and App Folder
         run: |
