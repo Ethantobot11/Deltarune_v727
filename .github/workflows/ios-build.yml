@@ -1,0 +1,33 @@
+name: "Modify and Pack Unsigned IPA"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  package-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Change App Display Name inside Info.plist
+        run: |
+          sed -i 's/<string>DELTARUNE<\/string>/<string>SOULBLAZERS<\/string>/g' Payload/DELTARUNE.app/Info.plist
+
+      - name: Safely Rename Executable and App Folder
+        run: |
+          sed -i 's/<key>CFBundleExecutable<\/key>\n\t<string>DELTARUNE<\/string>/<key>CFBundleExecutable<\/key>\n\t<string>SOULBLAZERS<\/string>/g' Payload/DELTARUNE.app/Info.plist
+          mv Payload/DELTARUNE.app/DELTARUNE Payload/DELTARUNE.app/SOULBLAZERS
+          mv Payload/DELTARUNE.app Payload/SOULBLAZERS.app
+      - name: Zip Payload into Unsigned IPA
+        run: |
+          mkdir -p build
+          zip -r build/SOULBLAZERS_Unsigned.ipa Payload/
+      - name: Upload Finished IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: soulblazers-unsigned-ipa
+          path: build/SOULBLAZERS_Unsigned.ipa
