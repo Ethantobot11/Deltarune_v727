@@ -13,11 +13,6 @@ jobs:
         with:
           lfs: true
 
-      - name: Safely Rename Executable and App Folder
-        run: |
-          mv Payload/DELTARUNE.app/DELTARUNE Payload/DELTARUNE.app/SOULBLAZERS
-          mv Payload/DELTARUNE.app Payload/SOULBLAZERS.app
-
       - name: Zip Payload into Unsigned IPA
         run: |
           mkdir -p build
